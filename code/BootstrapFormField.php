@@ -1,5 +1,10 @@
 <?php
 
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Convert;
+use SilverStripe\Forms\FormField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * The base class for creating a {@link FormField} object
  * that is compatible with the Twitter Bootstrap CSS framework.
@@ -9,25 +14,7 @@
  */
 class BootstrapFormField extends DataExtension {
 
-
 	/**
-	 * @var array Attributes and values for the holder tag of the form field
-	 */
-	protected $holderAttributes = array();
-
-
-	protected $holderClasses = array(
-		"form-group"
-	);
-
-	protected $labelClasses = array(
-	);
-
-	protected $inputClasses = array(
-	);
-
-
-    /**
      * The label grid class for the bootstrap 3 horizontal form
      * overrides form setting
      *
@@ -92,10 +79,12 @@ class BootstrapFormField extends DataExtension {
 	 * @return BootstrapFormField
 	 */
 	public function setHolderAttribute($key, $val) {
-		$this->holderAttributes[$key] = $val;
+		$holderAttributes = $this->owner->getField('holderAttributes');
+		if(!$holderAttributes) $holderAttributes = [];
+        $holderAttributes[$key] = $val;
+        $this->owner->setField('holderAttributes', $holderAttributes);
 		return $this->owner;
 	}
-
 
 
 	/**
@@ -105,7 +94,9 @@ class BootstrapFormField extends DataExtension {
 	 */
 	public function HolderAttributes() {
 		$ret = "";
-		foreach($this->holderAttributes as $k => $v) {
+        $holderAttributes = $this->owner->getField('holderAttributes');
+        if(!$holderAttributes) $holderAttributes = [];
+		foreach($holderAttributes as $k => $v) {
 			$ret .= "$k=\"".Convert::raw2att($v)."\" ";
 		}
 		return $ret;
@@ -119,7 +110,9 @@ class BootstrapFormField extends DataExtension {
 	 * @return BootstrapFormField
 	 */
 	public function addInputClass($class) {
-		$this->inputClasses[] = $class;
+        $inputClasses = $this->owner->getField('inputClasses');
+        if(!$inputClasses) $inputClasses = [];
+        $inputClasses[] = $class;
 		return $this->owner;
 	}
 
@@ -131,8 +124,9 @@ class BootstrapFormField extends DataExtension {
 	 */
 	public function InputClasses() {
 		$this->loadErrorMessage();
-
-		return implode(" ",$this->inputClasses);
+        $inputClasses = $this->owner->getField('inputClasses');
+        if(!$inputClasses) $inputClasses = [];
+		return implode(" ", $inputClasses);
 	}
 
 		/**
@@ -143,7 +137,9 @@ class BootstrapFormField extends DataExtension {
 	 * @return BootstrapFormField
 	 */
 	public function addLabelClass($class) {
-		$this->labelClasses[] = $class;
+        $labelClasses = $this->owner->getField('labelClasses');
+        if(!$labelClasses) $labelClasses = [];
+        $labelClasses[] = $class;
 		return $this->owner;
 	}
 
@@ -155,8 +151,9 @@ class BootstrapFormField extends DataExtension {
 	 */
 	public function LabelClasses() {
 		$this->loadErrorMessage();
-
-		return implode(" ",$this->labelClasses);
+        $labelClasses = $this->owner->getField('labelClasses');
+        if(!$labelClasses) $labelClasses = [];
+		return implode(" ", $labelClasses);
 	}
 
 	/**
@@ -167,7 +164,11 @@ class BootstrapFormField extends DataExtension {
 	 * @return BootstrapFormField
 	 */
 	public function addHolderClass($class) {
-		$this->holderClasses[] = $class;
+
+        $holderClasses = $this->owner->getField('holderClasses');
+        if(!$holderClasses) $holderClasses = [];
+        $holderClasses[] = $class;
+        $this->owner->setField('holderClasses', $holderClasses);
 		return $this->owner;
 	}
 
@@ -179,8 +180,9 @@ class BootstrapFormField extends DataExtension {
 	 */
 	public function HolderClasses() {
 		$this->loadErrorMessage();
-
-		return implode(" ",$this->holderClasses);
+        $holderClasses = $this->owner->getField('holderClasses');
+        if(!$holderClasses) $holderClasses = [];
+		return implode(" ", $holderClasses);
 	}
 
 
@@ -264,6 +266,5 @@ class BootstrapFormField extends DataExtension {
             $field->addExtraClass('form-control');
         }
 	}
-
 
 }

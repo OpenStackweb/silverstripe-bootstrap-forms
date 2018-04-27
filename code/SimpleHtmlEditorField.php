@@ -1,5 +1,9 @@
 <?php
 
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\View\Requirements;
+
 /**
  * Defines a formfield that has HTML editing capability
  * using the TinyMCE plugin
@@ -64,7 +68,7 @@ class SimpleHtmlEditorField extends TextareaField {
 	 * Builds the form field, includes JavaScript, and sets defaults
 	 *
 	 * @param array $attributes The attributes to include on the form field
-	 * @return SimpleHtmlEditorField
+	 * @return DBHTMLText
 	 */
 	public function FieldHolder($attributes = array ()) {
 		Requirements::javascript(BOOTSTRAP_FORMS_DIR."/javascript/tinymce/jscripts/tiny_mce/jquery.tinymce.js");

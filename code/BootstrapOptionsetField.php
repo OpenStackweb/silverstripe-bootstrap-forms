@@ -1,5 +1,7 @@
 <?php
 
+use SilverStripe\Forms\OptionsetField;
+
 
 /**
  * Creates a {@link OptionsetField} or a subclass thereof that is compatible with the

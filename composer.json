@@ -12,8 +12,8 @@
     ],
     "require":
     {
-        "silverstripe/framework": "3.*",
-	    "silverstripe/cms": "3.*"
+        "silverstripe/framework": ">=4.1",
+	    "silverstripe/cms": ">=4.1"
     },
     "replace": {"silverstripe/bootstrap-forms": "*"}
     

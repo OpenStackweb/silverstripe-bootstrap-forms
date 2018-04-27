@@ -1,5 +1,11 @@
 <?php
 
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\SSViewer;
+
 /**
  * Defines a FormField that uses the bootstrap-select JS plugin for making
  * dropdown fields nice.
@@ -13,7 +19,7 @@ class BootstrapDropdownField extends DropdownField {
 	 * Builds the form field, sets default attributes, and includes JS
 	 *
 	 * @param array $attributes The attributes to include on the formfield
-	 * @return SSViewer
+	 * @return DBHTMLText
 	 */
 	public function FieldHolder($attributes = array ()) {
 		if(!Config::inst()->get('BootstrapForm', 'bootstrap_select_included')) {

@@ -1,15 +1,38 @@
 <?php
 
-
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Extension;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Tab;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\View\SSViewer;
 
 class BootstrapFieldList extends Extension {
 
-	/**
-	 * A list of ignored fields that should not take on Bootstrap transforms
-	 * @var array
-	 */
-	protected $ignores = array ();
+    /**
+     * @param string $name
+     * @return mixed|null
+     */
+	private function getIgnoresByName($name){
+        $ignores = $this->owner->getField('ignores');
+        if (!$ignores) {
+            $ignores = [];
+            $this->owner->setField('ignores', $ignores);
+        }
+        return isset($ignores[$name]) ? $ignores[$name] : null;
+    }
 
+    private function setIgnores($name){
+        $ignores = $this->owner->getField('ignores');
+        if (!$ignores) {
+            $ignores = [];
+
+        }
+        $ignores[$name] = true;
+        $this->owner->setField('ignores', $ignores);
+    }
 	/**
 	 * Transforms all fields in the FieldList to use Bootstrap templates
 	 * @return FieldList
@@ -19,7 +42,7 @@ class BootstrapFieldList extends Extension {
 
 			$sng = Injector::inst()->get($f->class, true, ['dummy', '']);
 
-			if(isset($this->ignores[$f->getName()])) continue;
+            if(!is_null($this->getIgnoresByName($f->getName()))) continue;
 
             // if we have a CompositeField, bootstrapify its children
             if($f instanceof CompositeField) {
@@ -78,8 +101,7 @@ class BootstrapFieldList extends Extension {
 	 * @return FieldList
 	 */
 	public function bootstrapIgnore($field) {
-		$this->ignores[$field] = true;
-
+		$this->setIgnores($field);
 		return $this->owner;
 	}
 }

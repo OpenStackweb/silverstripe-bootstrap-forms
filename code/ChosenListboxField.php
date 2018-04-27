@@ -1,5 +1,9 @@
 <?php
 
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\View\Requirements;
+
 class ChosenListboxField extends ListboxField {
 	/**
 	 * @var int The number of items that need to appear in the dropdown
@@ -36,7 +40,7 @@ class ChosenListboxField extends ListboxField {
 	 * Builds the form field, sets default attributes, and includes JS
 	 *
 	 * @param array $attributes The attributes to include on the formfield
-	 * @return SSViewer
+	 * @return DBHTMLText
 	 */
 	public function FieldHolder($attributes = array ()) {
 		Requirements::javascript(FRAMEWORK_DIR."/admin/thirdparty/chosen/chosen/chosen.jquery.js");

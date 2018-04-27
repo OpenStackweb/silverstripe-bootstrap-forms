@@ -1,5 +1,10 @@
 <?php
 
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\View\Requirements;
+
 /**
  * Defines a FormField that uses the Chosen JS plugin for making
  * dropdown fields nice.
@@ -35,7 +40,7 @@ class ChosenDropdownField extends DropdownField {
 	 * Builds the form field, sets default attributes, and includes JS
 	 *
 	 * @param array $attributes The attributes to include on the formfield
-	 * @return SSViewer
+	 * @return DBHTMLText
 	 */
 	public function FieldHolder($attributes = array ()) {
 
